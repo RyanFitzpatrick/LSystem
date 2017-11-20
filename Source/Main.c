@@ -31,6 +31,8 @@ int main()
         printf("\n");
     }
 
-    LS_ReleaseMemory();
+    LS_ReleaseMap(map);
+    LS_ReleaseSystem(ls);
+
     return 0;
 }

@@ -6,7 +6,8 @@ static LS_Tree ** Expand(LS_Tree *, LS_NUM);
 
 LS_Tree * LS_BuildSystem(LS_Tree * parent, LS_NUM node, LS_NUM height)
 {
-    LS_Tree * ls = LS_BuildResource(sizeof(LS_Tree));
+    LS_Tree * ls = NULL;
+    LS_NewMem(ls, sizeof(LS_Tree));
 
     /* Initalize the new tree node using the given parameters */
     ls->node = node;
@@ -15,6 +16,9 @@ LS_Tree * LS_BuildSystem(LS_Tree * parent, LS_NUM node, LS_NUM height)
     ls->children = NULL;
 
     return ls;
+
+    FAIL:
+        return NULL;
 }
 
 void LS_Expand(LS_Tree * ls, LS_Tree ** (* expand)(LS_Tree *, LS_NUM))
@@ -66,16 +70,19 @@ void LS_ReleaseSystem(LS_Tree * ls)
     {
         for(i = 0; i < 4; ++i)
             LS_ReleaseSystem(ls->children[i]);
+
+        LS_DiscardMem(ls->children);
     }
 
     /* Free the tree node */
-    free(ls);
+    LS_DiscardMem(ls);
 }
 
 static LS_Tree ** Expand(LS_Tree * parent, LS_NUM node)
 {
     /* Initalize the 4 children */
-    LS_Tree ** children = LS_BuildResource(sizeof(LS_Tree *) * 4);
+    LS_Tree ** children = NULL;
+    LS_NewMem(children, sizeof(LS_Tree *) * 4);
 
     /* Assign all the symbols and heights using a default set of expansion rules */
     switch(node)
@@ -105,4 +112,7 @@ static LS_Tree ** Expand(LS_Tree * parent, LS_NUM node)
             children[3] = LS_BuildSystem(parent, LS_ZERO, LS_ONE);
             return children;
     }
+
+    FAIL:
+        return NULL;
 }

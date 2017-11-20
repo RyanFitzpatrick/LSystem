@@ -1,4 +1,4 @@
-All: Clean List Main Map Memory Tree Run
+All: Clean List Main Map Tree Run
 
 Run:
 	gcc ../Clean/*.o -o ../Run/Main
@@ -11,9 +11,6 @@ Main:
 
 Map:
 	gcc -c -fPIC -ansi -Wall -Werror -pedantic ../Source/Map.c -I../Headers -o ../Clean/Map.o
-
-Memory:
-	gcc -c -fPIC -ansi -Wall -Werror -pedantic ../Source/Memory.c -I../Headers -o ../Clean/Memory.o
 
 Tree:
 	gcc -c -fPIC -ansi -Wall -Werror -pedantic ../Source/Tree.c -I../Headers -o ../Clean/Tree.o

@@ -10,5 +10,6 @@ typedef struct LS_Map
 } LS_Map;
 
 LS_Map * LS_BuildMap(LS_Tree *);
+void LS_ReleaseMap(LS_Map *);
 
 #endif

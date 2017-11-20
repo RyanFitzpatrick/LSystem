@@ -4,13 +4,17 @@
 
 LS_List * LS_Append(LS_List * node, LS_NUM num)
 {
-    LS_List * head = LS_BuildResource(sizeof(LS_List));
+    LS_List * head = NULL;
+    LS_NewMem(head, sizeof(LS_List));
 
     /* Initalize a new node using the given number and have it point to the current head of the list */
     head->num = num;
     head->next = node;
 
     return head;
+
+    FAIL:
+        return NULL;
 }
 
 LS_List * BuildList(LS_List * list, LS_Tree * ls, unsigned int height)
@@ -37,5 +41,5 @@ void LS_ReleaseList(LS_List * head)
     if(head->next != NULL)
         LS_ReleaseList(head->next);
 
-    free(head);
+    LS_DiscardMem(head);
 }
