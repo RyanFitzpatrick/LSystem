@@ -4,35 +4,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DEPTH 8
+
 int main()
 {
-    LS_Tree * ls = LS_BuildSystem(NULL, LS_ZERO, LS_TWO);
-    LS_Map * map;
+    lsTree * ls = NULL;
+    lsMap * map = NULL;
     int i, j;
 
-    LS_Expand(ls, NULL);
-
-    for(i = 0; i < 4; ++i)
-    {
-        LS_Expand(ls->children[i], NULL);
-
-        for(j = 0; j < 4; ++j)
-            LS_Expand(ls->children[i]->children[j], NULL);
-    }
-
-    map = LS_BuildMap(ls);
+    lsBuildSystem(ls, NULL, 0, 2);
+    lsExpand(ls, DEPTH, NULL);
+    lsBuildMap(map, ls, DEPTH, 0);
 
     for(i = 0; i < map->len; ++i)
     {
         printf("%4.2f", map->grid[i][0]);
+
         for(j = 1; j < map->len; ++j)
             printf(",%5.2f", map->grid[i][j]);
 
         printf("\n");
     }
 
-    LS_ReleaseMap(map);
-    LS_ReleaseSystem(ls);
+    lsReleaseMap(map);
+    lsReleaseSystem(ls);
 
     return 0;
+
+    FAIL:
+        printf("ERROR: Memory Error\n");
+        lsReleaseSystem(ls);
+        return -1;
 }

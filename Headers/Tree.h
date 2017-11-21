@@ -1,25 +1,19 @@
 #ifndef _LS_TREE_
 #define _LS_TREE_
 
-typedef enum
+typedef struct lsTree
 {
-    LS_ZERO = 0,
-    LS_ONE = 1,
-    LS_TWO = 2,
-    LS_THREE = 3
-} LS_NUM;
+    unsigned char node;
+    unsigned char height;
+    struct lsTree * parent;
+    struct lsTree ** children;
+} lsTree;
 
-typedef struct LS_Tree
-{
-    LS_NUM node;
-    LS_NUM height;
-    struct LS_Tree * parent;
-    struct LS_Tree ** children;
-} LS_Tree;
+lsTree * _lsBuildSystem(lsTree *, unsigned char, unsigned char);
+int _lsExpand(lsTree *, unsigned int, lsTree ** (*)(lsTree *, unsigned char));
+void lsReleaseSystem(lsTree *);
 
-LS_Tree * LS_BuildSystem(LS_Tree *, LS_NUM, LS_NUM);
-void LS_Expand(LS_Tree *, LS_Tree ** (*)(LS_Tree *, LS_NUM));
-int LS_Depth(LS_Tree *);
-void LS_ReleaseSystem(LS_Tree *);
+#define lsBuildSystem(tree, parent, node, height) if ((tree = _lsBuildSystem(parent, node, height)) == NULL) goto FAIL
+#define lsExpand(tree, depth, func) if (!_lsExpand(tree, depth, func)) goto FAIL
 
 #endif

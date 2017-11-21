@@ -2,12 +2,12 @@
 #include "Memory.h"
 #include <stdlib.h>
 
-static LS_Tree ** Expand(LS_Tree *, LS_NUM);
+static lsTree ** Expand(lsTree *, unsigned char);
 
-LS_Tree * LS_BuildSystem(LS_Tree * parent, LS_NUM node, LS_NUM height)
+lsTree * _lsBuildSystem(lsTree * parent, unsigned char node, unsigned char height)
 {
-    LS_Tree * ls = NULL;
-    LS_NewMem(ls, sizeof(LS_Tree));
+    lsTree * ls = NULL;
+    lsNewMem(ls, sizeof(lsTree));
 
     /* Initalize the new tree node using the given parameters */
     ls->node = node;
@@ -21,46 +21,32 @@ LS_Tree * LS_BuildSystem(LS_Tree * parent, LS_NUM node, LS_NUM height)
         return NULL;
 }
 
-void LS_Expand(LS_Tree * ls, LS_Tree ** (* expand)(LS_Tree *, LS_NUM))
+int _lsExpand(lsTree * ls, unsigned int depth, lsTree ** (* expand)(lsTree *, unsigned char))
 {
+    int success = 1;
+
     /* If the node is NULL or if it already has children then stop */
-    if(ls == NULL || ls->children != NULL)
-        return;
+    if(depth == 0 || ls == NULL || ls->children != NULL)
+        return 1;
 
     /* If no expand function is given then use a default one */
     if(expand == NULL)
         expand = Expand;
 
     /* Initalize all of the nodes children */
-    ls->children = expand(ls, ls->node);
-}
-
-int LS_Depth(LS_Tree * ls)
-{
-    LS_Tree * temp;
-    int depth;
-
-    /* A NULL tree has no depth */
-    if(ls == NULL)
+    if ((ls->children = expand(ls, ls->node)) == NULL)
         return 0;
 
-    temp = ls;
-    depth = 1;
+    success &= _lsExpand(ls->children[0], --depth, expand);
+    success &= _lsExpand(ls->children[1], depth, expand);
+    success &= _lsExpand(ls->children[2], depth, expand);
+    success &= _lsExpand(ls->children[3], depth, expand);
 
-    /* Count all the nodes on the way to the end of the complete tree */
-    while(temp->children != NULL)
-    {
-        temp = temp->children[0];
-        ++depth;
-    }
-
-    return depth;
+    return success;
 }
 
-void LS_ReleaseSystem(LS_Tree * ls)
+void lsReleaseSystem(lsTree * ls)
 {
-    int i;
-
     /* No action is required if the tree is NULL */
     if(ls == NULL)
         return;
@@ -68,48 +54,49 @@ void LS_ReleaseSystem(LS_Tree * ls)
     /* Recursively free all the child nodes */
     if(ls->children != NULL)
     {
-        for(i = 0; i < 4; ++i)
-            LS_ReleaseSystem(ls->children[i]);
-
-        LS_DiscardMem(ls->children);
+        lsReleaseSystem(ls->children[0]);
+        lsReleaseSystem(ls->children[1]);
+        lsReleaseSystem(ls->children[2]);
+        lsReleaseSystem(ls->children[3]);
+        lsDiscardMem(ls->children);
     }
 
     /* Free the tree node */
-    LS_DiscardMem(ls);
+    lsDiscardMem(ls);
 }
 
-static LS_Tree ** Expand(LS_Tree * parent, LS_NUM node)
+static lsTree ** Expand(lsTree * parent, unsigned char node)
 {
     /* Initalize the 4 children */
-    LS_Tree ** children = NULL;
-    LS_NewMem(children, sizeof(LS_Tree *) * 4);
+    lsTree ** children = NULL;
+    lsNewMem(children, sizeof(lsTree *) * 4);
 
     /* Assign all the symbols and heights using a default set of expansion rules */
     switch(node)
     {
-        case LS_ZERO:
-            children[0] = LS_BuildSystem(parent, LS_ONE, LS_TWO);
-            children[1] = LS_BuildSystem(parent, LS_TWO, LS_ZERO);
-            children[2] = LS_BuildSystem(parent, LS_ONE, LS_THREE);
-            children[3] = LS_BuildSystem(parent, LS_ZERO, LS_ONE);
+        case 0:
+            lsBuildSystem(children[0], parent, 1, 2);
+            lsBuildSystem(children[1], parent, 2, 0);
+            lsBuildSystem(children[2], parent, 1, 3);
+            lsBuildSystem(children[3], parent, 0, 1);
             return children;
-        case LS_ONE:
-            children[0] = LS_BuildSystem(parent, LS_TWO, LS_ONE);
-            children[1] = LS_BuildSystem(parent, LS_THREE, LS_TWO);
-            children[2] = LS_BuildSystem(parent, LS_TWO, LS_ZERO);
-            children[3] = LS_BuildSystem(parent, LS_THREE, LS_TWO);
+        case 1:
+            lsBuildSystem(children[0], parent, 2, 1);
+            lsBuildSystem(children[1], parent, 3, 2);
+            lsBuildSystem(children[2], parent, 2, 0);
+            lsBuildSystem(children[3], parent, 3, 2);
             return children;
-        case LS_TWO:
-            children[0] = LS_BuildSystem(parent, LS_THREE, LS_THREE);
-            children[1] = LS_BuildSystem(parent, LS_ZERO, LS_ONE);
-            children[2] = LS_BuildSystem(parent, LS_ONE, LS_THREE);
-            children[3] = LS_BuildSystem(parent, LS_ZERO, LS_TWO);
+        case 2:
+            lsBuildSystem(children[0], parent, 3, 3);
+            lsBuildSystem(children[1], parent, 0, 1);
+            lsBuildSystem(children[2], parent, 1, 3);
+            lsBuildSystem(children[3], parent, 0, 2);
             return children;
         default:
-            children[0] = LS_BuildSystem(parent, LS_THREE, LS_ZERO);
-            children[1] = LS_BuildSystem(parent, LS_TWO, LS_THREE);
-            children[2] = LS_BuildSystem(parent, LS_ONE, LS_ZERO);
-            children[3] = LS_BuildSystem(parent, LS_ZERO, LS_ONE);
+            lsBuildSystem(children[0], parent, 3, 0);
+            lsBuildSystem(children[1], parent, 2, 3);
+            lsBuildSystem(children[2], parent, 1, 0);
+            lsBuildSystem(children[3], parent, 0, 1);
             return children;
     }
 

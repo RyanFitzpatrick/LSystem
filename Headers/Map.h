@@ -3,13 +3,15 @@
 
 #include "Tree.h"
 
-typedef struct LS_Map
+typedef struct lsMap
 {
     float ** grid;
-    int len;
-} LS_Map;
+    unsigned int len;
+} lsMap;
 
-LS_Map * LS_BuildMap(LS_Tree *);
-void LS_ReleaseMap(LS_Map *);
+lsMap * _lsBuildMap(lsTree *, unsigned int, unsigned int);
+void lsReleaseMap(lsMap *);
+
+#define lsBuildMap(map, tree, depth, height) if ((map = _lsBuildMap(tree, depth, height)) == NULL) goto FAIL
 
 #endif
