@@ -82,7 +82,7 @@ static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len, float h)
 
 static void BuildNWGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
 {
-    float current = height + ((float)(ls->height) / (1 << depth));
+    float current = (float)(height + ls->height) / (1 << depth);
     int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
 
     map->grid[x][y] = current;
@@ -101,7 +101,7 @@ static void BuildNWGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, 
 
 static void BuildNEGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
 {
-    float current = height + ((float)(ls->height) / (1 << depth));
+    float current = (float)(height + ls->height) / (1 << depth);
     int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
 
     map->grid[x][y] = current;
@@ -120,7 +120,7 @@ static void BuildNEGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, 
 
 static void BuildSEGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
 {
-    float current = height + ((float)(ls->height) / (1 << depth));
+    float current = (float)(height + ls->height) / (1 << depth);
     int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
 
     map->grid[x][y] = current;
@@ -139,7 +139,7 @@ static void BuildSEGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, 
 
 static void BuildSWGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
 {
-    float current = height + ((float)(ls->height) / (1 << depth));
+    float current = (float)(height + ls->height) / (1 << depth);
     int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
 
     map->grid[x][y] = current;

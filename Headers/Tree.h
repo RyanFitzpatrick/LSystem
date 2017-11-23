@@ -1,11 +1,18 @@
+/* Tree.h: Defines various types, prototypes, and macros used for LSystem Trees */
+
 #ifndef _LS_TREE_
 #define _LS_TREE_
 
+/* The structure used to represent an LSystem Tree */
 typedef struct lsTree
 {
+    /* The symbol associated with a given node in the Tree */
     unsigned char node;
+    /* The height specified by a given node in the Tree */
     unsigned char height;
+    /* The nodes parent */
     struct lsTree * parent;
+    /* The child nodes of a given Tree node, there must be exactly 4 child nodes */
     struct lsTree ** children;
 } lsTree;
 
