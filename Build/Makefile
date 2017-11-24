@@ -1,9 +1,9 @@
-CFLAGS = -c -fPIC -ansi -pedantic -Wall -Werror -O3
+CFLAGS = -c -fPIC -ansi -pedantic -Wall -Werror -lm -O3
 
 All: Clean Main Map Tree Run
 
 Run:
-	gcc ../Clean/*.o -o ../Run/Main
+	gcc ../Clean/*.o -o ../Run/Main -lm
 
 Main:
 	gcc $(CFLAGS) ../Source/Main.c -I../Headers -o ../Clean/Main.o
