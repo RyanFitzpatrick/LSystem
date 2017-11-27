@@ -135,10 +135,10 @@ static lsTree ** Expand(lsTree * parent, unsigned char node)
             lsBuildSystem(children[3], parent, 9, -1);
             return children;
         case 10:
-            lsBuildSystem(children[0], parent, 10, 1);
-            lsBuildSystem(children[1], parent, 10, 1);
-            lsBuildSystem(children[2], parent, 10, 1);
-            lsBuildSystem(children[3], parent, 10, 1);
+            lsBuildSystem(children[0], parent, 10, 16);
+            lsBuildSystem(children[1], parent, 10, 16);
+            lsBuildSystem(children[2], parent, 10, 16);
+            lsBuildSystem(children[3], parent, 10, 16);
             return children;
         default:
             lsBuildSystem(children[0], parent, 3, 3);
