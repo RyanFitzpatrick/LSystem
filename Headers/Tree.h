@@ -9,7 +9,7 @@ typedef struct lsTree
     /* The symbol associated with a given node in the Tree */
     unsigned char node;
     /* The height specified by a given node in the Tree */
-    unsigned char height;
+    char height;
     /* The nodes parent */
     struct lsTree * parent;
     /* The child nodes of a given Tree node, there must be exactly 4 child nodes */

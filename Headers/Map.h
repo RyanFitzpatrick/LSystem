@@ -19,9 +19,8 @@ typedef struct lsMap
 /* NOTE: It's recommended to use the lsBuildMap macro instead of calling this directly */
 /* Param1 lsTree *: The Tree used to define the heights for the map */
 /* Param2 unsigned int: The max depth to search the Tree for height values */
-/* Param3 unsigned int: The initial heights for the map */
 /* Returns: A newly allocated height map containing values from the Tree */
-lsMap * _lsBuildMap(lsTree *, unsigned int, unsigned int);
+lsMap * _lsBuildMap(lsTree *, unsigned int);
 
 /* Frees all memory associated with a height map */
 /* Param1 lsMap *: The map to be released */
@@ -29,6 +28,6 @@ void lsReleaseMap(lsMap *);
 
 /* Calls the _lsBuildMap function and jumps to the FAIL label on error */
 /* This is the recommened way to Build a height map */
-#define lsBuildMap(map, tree, depth, height) if ((map = _lsBuildMap(tree, depth, height)) == NULL) goto FAIL
+#define lsBuildMap(map, tree, depth) if ((map = _lsBuildMap(tree, depth)) == NULL) goto FAIL
 
 #endif

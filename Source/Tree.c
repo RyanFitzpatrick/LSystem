@@ -75,27 +75,75 @@ static lsTree ** Expand(lsTree * parent, unsigned char node)
     switch(node)
     {
         case 0:
-            lsBuildSystem(children[0], parent, 0, 0);
-            lsBuildSystem(children[1], parent, 2, 3);
-            lsBuildSystem(children[2], parent, 0, 3);
-            lsBuildSystem(children[3], parent, 0, 2);
+            lsBuildSystem(children[0], parent, 1, -6);
+            lsBuildSystem(children[1], parent, 2, -6);
+            lsBuildSystem(children[2], parent, 3, -6);
+            lsBuildSystem(children[3], parent, 4, -6);
             return children;
         case 1:
-            lsBuildSystem(children[0], parent, 1, 0);
-            lsBuildSystem(children[1], parent, 1, 2);
-            lsBuildSystem(children[2], parent, 3, 3);
-            lsBuildSystem(children[3], parent, 0, 0);
+            lsBuildSystem(children[0], parent, 9, -1);
+            lsBuildSystem(children[1], parent, 9, -1);
+            lsBuildSystem(children[2], parent, 9, -1);
+            lsBuildSystem(children[3], parent, 5, 4);
             return children;
         case 2:
-            lsBuildSystem(children[0], parent, 2, 3);
-            lsBuildSystem(children[1], parent, 3, 0);
-            lsBuildSystem(children[2], parent, 2, 3);
-            lsBuildSystem(children[3], parent, 1, 2);
+            lsBuildSystem(children[0], parent, 9, -1);
+            lsBuildSystem(children[1], parent, 9, -1);
+            lsBuildSystem(children[2], parent, 6, 4);
+            lsBuildSystem(children[3], parent, 9, -1);
+            return children;
+        case 3:
+            lsBuildSystem(children[0], parent, 9, -1);
+            lsBuildSystem(children[1], parent, 7, 4);
+            lsBuildSystem(children[2], parent, 9, -1);
+            lsBuildSystem(children[3], parent, 9, -1);
+            return children;
+        case 4:
+            lsBuildSystem(children[0], parent, 8, 4);
+            lsBuildSystem(children[1], parent, 9, -1);
+            lsBuildSystem(children[2], parent, 9, -1);
+            lsBuildSystem(children[3], parent, 9, -1);
+            return children;
+        case 5:
+            lsBuildSystem(children[0], parent, 9, -1);
+            lsBuildSystem(children[1], parent, 10, 1);
+            lsBuildSystem(children[2], parent, 10, 1);
+            lsBuildSystem(children[3], parent, 10, 1);
+            return children;
+        case 6:
+            lsBuildSystem(children[0], parent, 10, 1);
+            lsBuildSystem(children[1], parent, 9, -1);
+            lsBuildSystem(children[2], parent, 10, 1);
+            lsBuildSystem(children[3], parent, 10, 1);
+            return children;
+        case 7:
+            lsBuildSystem(children[0], parent, 10, 1);
+            lsBuildSystem(children[1], parent, 10, 1);
+            lsBuildSystem(children[2], parent, 9, -1);
+            lsBuildSystem(children[3], parent, 10, 1);
+            return children;
+        case 8:
+            lsBuildSystem(children[0], parent, 10, 1);
+            lsBuildSystem(children[1], parent, 10, 1);
+            lsBuildSystem(children[2], parent, 10, 1);
+            lsBuildSystem(children[3], parent, 9, -1);
+            return children;
+        case 9:
+            lsBuildSystem(children[0], parent, 9, -1);
+            lsBuildSystem(children[1], parent, 9, -1);
+            lsBuildSystem(children[2], parent, 9, -1);
+            lsBuildSystem(children[3], parent, 9, -1);
+            return children;
+        case 10:
+            lsBuildSystem(children[0], parent, 10, 1);
+            lsBuildSystem(children[1], parent, 10, 1);
+            lsBuildSystem(children[2], parent, 10, 1);
+            lsBuildSystem(children[3], parent, 10, 1);
             return children;
         default:
             lsBuildSystem(children[0], parent, 3, 3);
             lsBuildSystem(children[1], parent, 2, 3);
-            lsBuildSystem(children[2], parent, 3, 1);
+            lsBuildSystem(children[2], parent, 3, -1);
             lsBuildSystem(children[3], parent, 3, 2);
             return children;
     }

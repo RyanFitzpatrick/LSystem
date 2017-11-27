@@ -3,13 +3,11 @@
 #include <math.h>
 #include <stdlib.h>
 
-static int BuildGrid(lsMap *, lsTree *, unsigned int, float);
-static void BuildNWGrid(lsMap *, lsTree *, int, int, int, int, int, float);
-static void BuildNEGrid(lsMap *, lsTree *, int, int, int, int, int, float);
-static void BuildSEGrid(lsMap *, lsTree *, int, int, int, int, int, float);
-static void BuildSWGrid(lsMap *, lsTree *, int, int, int, int, int, float);
+static int BuildGrid(lsMap *, lsTree *, unsigned int);
+static void BuildSubGrid(lsMap *, lsTree *, int, int, int, int, int, float);
+static float Normal(lsMap * map, int, int);
 
-lsMap * _lsBuildMap(lsTree * ls, unsigned int depth, unsigned int height)
+lsMap * _lsBuildMap(lsTree * ls, unsigned int depth)
 {
     lsMap * map = NULL;
 
@@ -21,7 +19,7 @@ lsMap * _lsBuildMap(lsTree * ls, unsigned int depth, unsigned int height)
     lsNewMem(map, sizeof(lsMap));
     map->len = (1 << (depth + 1)) + 1;
 
-    if (!BuildGrid(map, ls, map->len, (float)height))
+    if (!BuildGrid(map, ls, map->len))
     {
         lsDiscardMem(map);
         return NULL;
@@ -47,10 +45,10 @@ void lsReleaseMap(lsMap * map)
     lsDiscardMem(map);
 }
 
-static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len, float h)
+static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len)
 {
     float height = (float)(ls->height);
-    int middle, end, i, j;
+    int middle, end, i, j, l = len - 1;
 
     lsNewMem(map->grid, sizeof(float *) * len);
 
@@ -59,7 +57,7 @@ static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len, float h)
         lsNewMem(map->grid[i], sizeof(float) * len);
 
         for (j = 0; j < len; j++)
-            map->grid[i][j] = h;
+            map->grid[i][j] = 0.0;
     }
 
     end = len - 1;
@@ -68,10 +66,19 @@ static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len, float h)
 
     if (ls->children != NULL)
     {
-        BuildNWGrid(map, ls->children[0], 0, middle, 0, middle, 1, height);
-        BuildNEGrid(map, ls->children[1], middle, end, 0, middle, 1, height);
-        BuildSEGrid(map, ls->children[2], middle, end, middle, end, 1, height);
-        BuildSWGrid(map, ls->children[3], 0, middle, middle, end, 1, height);
+        BuildSubGrid(map, ls->children[0], 0, middle, 0, middle, 1, height);
+        BuildSubGrid(map, ls->children[1], middle, end, 0, middle, 1, height);
+        BuildSubGrid(map, ls->children[2], 0, middle, middle, end, 1, height);
+        BuildSubGrid(map, ls->children[3], middle, end, middle, end, 1, height);
+    }
+
+    for (i = 1; i < l; ++i)
+    {
+        for (j = 1; j < l; j++)
+        {
+            if (map->grid[i][j] == 0.0)
+                map->grid[i][j] = Normal(map, i, j);
+        }
     }
 
     return 1;
@@ -81,78 +88,38 @@ static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len, float h)
         return 0;
 }
 
-static void BuildNWGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
+static void BuildSubGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
 {
-    float current = (float)(ls->height) * pow(0.9, depth);
+    float current = height + ((float)(ls->height) / (1 << depth));
     int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
 
     map->grid[x][y] = current;
-    map->grid[xmin][y] = (map->grid[xmin][ymin] + map->grid[xmin][ymax]) / 2;
-    map->grid[x][ymin] = (map->grid[xmin][ymin] + map->grid[xmax][ymin]) / 2;
-    map->grid[xmax][y] = (map->grid[xmax][ymin] + map->grid[xmax][ymax]) / 2;
 
     if (ls->children != NULL)
     {
-        BuildNWGrid(map, ls->children[0], xmin, x, ymin, y, depth + 1, current);
-        BuildNEGrid(map, ls->children[1], x, xmax, ymin, y, depth + 1, current);
-        BuildSEGrid(map, ls->children[2], x, xmax, y, ymax, depth + 1, current);
-        BuildSWGrid(map, ls->children[3], xmin, x, y, ymax, depth + 1, current);
+        BuildSubGrid(map, ls->children[0], xmin, x, ymin, y, depth + 1, current);
+        BuildSubGrid(map, ls->children[1], x, xmax, ymin, y, depth + 1, current);
+        BuildSubGrid(map, ls->children[2], xmin, x, y, ymax, depth + 1, current);
+        BuildSubGrid(map, ls->children[3], x, xmax, y, ymax, depth + 1, current);
     }
 }
 
-static void BuildNEGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
+static float Normal(lsMap * map, int x, int y)
 {
-    float current = (float)(ls->height) * pow(0.9, depth);
-    int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
+    float total = 0.0;
+    unsigned int count = 0, xmax = x + 1, ymax = y + 1, i , j;
 
-    map->grid[x][y] = current;
-    map->grid[x][ymin] = (map->grid[xmin][ymin] + map->grid[xmax][ymin]) / 2;
-    map->grid[xmax][y] = (map->grid[xmax][ymin] + map->grid[xmax][ymax]) / 2;
-    map->grid[x][ymax] = (map->grid[xmin][ymax] + map->grid[xmax][ymax]) / 2;
-
-    if (ls->children != NULL)
+    for (i = x - 1; i <= xmax; ++i)
     {
-        BuildNWGrid(map, ls->children[0], xmin, x, ymin, y, depth + 1, current);
-        BuildNEGrid(map, ls->children[1], x, xmax, ymin, y, depth + 1, current);
-        BuildSEGrid(map, ls->children[2], x, xmax, y, ymax, depth + 1, current);
-        BuildSWGrid(map, ls->children[3], xmin, x, y, ymax, depth + 1, current);
+        for (j = y - 1; j < ymax; ++j)
+        {
+            if (map->grid[i][j] != 0.0)
+            {
+                total += map->grid[i][j];
+                ++count;
+            }
+        }
     }
-}
 
-static void BuildSEGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
-{
-    float current = (float)(ls->height) * pow(0.9, depth);
-    int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
-
-    map->grid[x][y] = current;
-    map->grid[xmax][y] = (map->grid[xmax][ymin] + map->grid[xmax][ymax]) / 2;
-    map->grid[x][ymax] = (map->grid[xmin][ymax] + map->grid[xmax][ymax]) / 2;
-    map->grid[xmin][y] = (map->grid[xmin][ymin] + map->grid[xmin][ymax]) / 2;
-
-    if (ls->children != NULL)
-    {
-        BuildNWGrid(map, ls->children[0], xmin, x, ymin, y, depth + 1, current);
-        BuildNEGrid(map, ls->children[1], x, xmax, ymin, y, depth + 1, current);
-        BuildSEGrid(map, ls->children[2], x, xmax, y, ymax, depth + 1, current);
-        BuildSWGrid(map, ls->children[3], xmin, x, y, ymax, depth + 1, current);
-    }
-}
-
-static void BuildSWGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
-{
-    float current = (float)(ls->height) * pow(0.9, depth);
-    int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
-
-    map->grid[x][y] = current;
-    map->grid[x][ymax] = (map->grid[xmin][ymax] + map->grid[xmax][ymax]) / 2;
-    map->grid[xmin][y] = (map->grid[xmin][ymin] + map->grid[xmin][ymax]) / 2;
-    map->grid[x][ymin] = (map->grid[xmin][ymin] + map->grid[xmax][ymin]) / 2;
-
-    if (ls->children != NULL)
-    {
-        BuildNWGrid(map, ls->children[0], xmin, x, ymin, y, depth + 1, current);
-        BuildNEGrid(map, ls->children[1], x, xmax, ymin, y, depth + 1, current);
-        BuildSEGrid(map, ls->children[2], x, xmax, y, ymax, depth + 1, current);
-        BuildSWGrid(map, ls->children[3], xmin, x, y, ymax, depth + 1, current);
-    }
+    return total / count;
 }
