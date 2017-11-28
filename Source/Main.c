@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define DEPTH 4
+#define DEPTH 8
 
 int main()
 {
