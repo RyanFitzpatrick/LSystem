@@ -75,34 +75,34 @@ static lsTree ** Expand(lsTree * parent, unsigned char node)
     switch(node)
     {
         case 0:
-            lsBuildSystem(children[0], parent, 1, -6);
-            lsBuildSystem(children[1], parent, 2, -6);
-            lsBuildSystem(children[2], parent, 3, -6);
-            lsBuildSystem(children[3], parent, 4, -6);
+            lsBuildSystem(children[0], parent, 1, -8);
+            lsBuildSystem(children[1], parent, 2, -8);
+            lsBuildSystem(children[2], parent, 3, -8);
+            lsBuildSystem(children[3], parent, 4, -8);
             return children;
         case 1:
-            lsBuildSystem(children[0], parent, 9, -1);
-            lsBuildSystem(children[1], parent, 9, -1);
-            lsBuildSystem(children[2], parent, 9, -1);
+            lsBuildSystem(children[0], parent, 9, -2);
+            lsBuildSystem(children[1], parent, 9, -2);
+            lsBuildSystem(children[2], parent, 9, -2);
             lsBuildSystem(children[3], parent, 5, 4);
             return children;
         case 2:
-            lsBuildSystem(children[0], parent, 9, -1);
-            lsBuildSystem(children[1], parent, 9, -1);
-            lsBuildSystem(children[2], parent, 6, 4);
-            lsBuildSystem(children[3], parent, 9, -1);
+            lsBuildSystem(children[0], parent, 9, -2);
+            lsBuildSystem(children[1], parent, 9, -2);
+            lsBuildSystem(children[2], parent, 6, 10);
+            lsBuildSystem(children[3], parent, 9, -2);
             return children;
         case 3:
-            lsBuildSystem(children[0], parent, 9, -1);
-            lsBuildSystem(children[1], parent, 7, 4);
-            lsBuildSystem(children[2], parent, 9, -1);
-            lsBuildSystem(children[3], parent, 9, -1);
+            lsBuildSystem(children[0], parent, 9, -2);
+            lsBuildSystem(children[1], parent, 7, 10);
+            lsBuildSystem(children[2], parent, 9, -2);
+            lsBuildSystem(children[3], parent, 9, -2);
             return children;
         case 4:
-            lsBuildSystem(children[0], parent, 8, 4);
-            lsBuildSystem(children[1], parent, 9, -1);
-            lsBuildSystem(children[2], parent, 9, -1);
-            lsBuildSystem(children[3], parent, 9, -1);
+            lsBuildSystem(children[0], parent, 8, 10);
+            lsBuildSystem(children[1], parent, 9, -2);
+            lsBuildSystem(children[2], parent, 9, -2);
+            lsBuildSystem(children[3], parent, 9, -2);
             return children;
         case 5:
             lsBuildSystem(children[0], parent, 9, -1);
@@ -129,16 +129,16 @@ static lsTree ** Expand(lsTree * parent, unsigned char node)
             lsBuildSystem(children[3], parent, 9, -1);
             return children;
         case 9:
-            lsBuildSystem(children[0], parent, 9, -1);
-            lsBuildSystem(children[1], parent, 9, -1);
-            lsBuildSystem(children[2], parent, 9, -1);
-            lsBuildSystem(children[3], parent, 9, -1);
+            lsBuildSystem(children[0], parent, 9, -10);
+            lsBuildSystem(children[1], parent, 9, -10);
+            lsBuildSystem(children[2], parent, 9, -10);
+            lsBuildSystem(children[3], parent, 9, -10);
             return children;
         case 10:
-            lsBuildSystem(children[0], parent, 10, 16);
-            lsBuildSystem(children[1], parent, 10, 16);
-            lsBuildSystem(children[2], parent, 10, 16);
-            lsBuildSystem(children[3], parent, 10, 16);
+            lsBuildSystem(children[0], parent, 10, 20);
+            lsBuildSystem(children[1], parent, 10, 20);
+            lsBuildSystem(children[2], parent, 10, 20);
+            lsBuildSystem(children[3], parent, 10, 20);
             return children;
         default:
             lsBuildSystem(children[0], parent, 3, 3);
