@@ -12,7 +12,7 @@ int main()
     lsMap * map = NULL;
     int i, j;
 
-    lsBuildSystem(ls, NULL, 0, 8);
+    lsBuildSystem(ls, NULL, 0, 2);
     lsExpand(ls, DEPTH, NULL);
     lsBuildMap(map, ls, DEPTH);
 
