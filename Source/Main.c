@@ -3,6 +3,7 @@
 #include "Tree.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define DEPTH 8
 
@@ -12,7 +13,8 @@ int main()
     lsMap * map = NULL;
     int i, j;
 
-    lsBuildSystem(ls, NULL, 0, 2);
+    srand(time(NULL));
+    lsBuildSystem(ls, NULL, 0, rand() % 4 + 1, time(NULL));
     lsExpand(ls, DEPTH, NULL);
     lsBuildMap(map, ls, DEPTH);
 
