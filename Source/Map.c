@@ -90,7 +90,7 @@ static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len)
 
 static void BuildSubGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
 {
-    float current = ls->height * pow(0.8, depth);
+    float current = ls->height * pow(0.95, depth);
     int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
 
     map->grid[x][y] = current;
@@ -121,5 +121,5 @@ static float Normal(lsMap * map, int x, int y)
         }
     }
 
-    return total / count;
+    return count != 0 ? total / count : 0.0;
 }

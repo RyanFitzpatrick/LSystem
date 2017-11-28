@@ -78,34 +78,34 @@ static lsTree ** Expand(lsTree * parent, unsigned char node, unsigned int seed)
     switch(node)
     {
         case 0:
-            lsBuildSystem(children[0], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[1], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[2], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[3], parent, rand() % 5, rand() % 4 + 1, time(NULL));
+            lsBuildSystem(children[0], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[1], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[2], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[3], parent, rand() % 5, rand() % 5, time(NULL));
             return children;
         case 1:
-            lsBuildSystem(children[0], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[1], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[2], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[3], parent, rand() % 5, rand() % 4 + 1, time(NULL));
+            lsBuildSystem(children[0], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[1], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[2], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[3], parent, rand() % 5, rand() % 5, time(NULL));
             return children;
         case 2:
-            lsBuildSystem(children[0], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[1], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[2], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[3], parent, rand() % 5, rand() % 4 + 1, time(NULL));
+            lsBuildSystem(children[0], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[1], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[2], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[3], parent, rand() % 5, rand() % 5, time(NULL));
             return children;
         case 3:
-            lsBuildSystem(children[0], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[1], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[2], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[3], parent, rand() % 5, rand() % 4 + 1, time(NULL));
+            lsBuildSystem(children[0], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[1], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[2], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[3], parent, rand() % 5, rand() % 5, time(NULL));
             return children;
         default:
-            lsBuildSystem(children[0], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[1], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[2], parent, rand() % 5, rand() % 4 + 1, time(NULL));
-            lsBuildSystem(children[3], parent, rand() % 5, rand() % 4 + 1, time(NULL));
+            lsBuildSystem(children[0], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[1], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[2], parent, rand() % 5, rand() % 5, time(NULL));
+            lsBuildSystem(children[3], parent, rand() % 5, rand() % 5, time(NULL));
             return children;
     }
 
