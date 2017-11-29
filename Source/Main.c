@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define DEPTH 4
+#define DEPTH 8
 
 int main()
 {
