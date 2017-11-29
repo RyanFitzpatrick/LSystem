@@ -3,13 +3,12 @@
 #include <math.h>
 #include <stdlib.h>
 
-static int BuildGrid(lsMap *, lsTree *, unsigned int);
-static void BuildSubGrid(lsMap *, lsTree *, int, int, int, int, int, float);
-static float Normal(lsMap * map, int, int);
+static void FillMap(lsMap *, lsTree *, unsigned int, unsigned int, unsigned int);
 
 lsMap * _lsBuildMap(lsTree * ls, unsigned int depth)
 {
     lsMap * map = NULL;
+    unsigned int i;
 
     /* This function requires the tree to not be null, otherwiss there is no data for the grid */
     if(ls == NULL)
@@ -17,23 +16,24 @@ lsMap * _lsBuildMap(lsTree * ls, unsigned int depth)
 
     /* Initialize the map, determine the depth of the tree, and then build the grid using the tree values */
     lsNewMem(map, sizeof(lsMap));
-    map->len = (1 << (depth + 1)) + 1;
+    map->len = 1 << depth;
 
-    if (!BuildGrid(map, ls, map->len))
-    {
-        lsDiscardMem(map);
-        return NULL;
-    }
+    lsNewMem(map->grid, sizeof(float *) * map->len);
 
+    for (i = 0; i < map->len; ++i)
+        lsNewMem(map->grid[i], sizeof(float) * map->len);
+
+    FillMap(map, ls, 0, 0, map->len);
     return map;
 
     FAIL:
+        lsReleaseMap(map);
         return NULL;
 }
 
 void lsReleaseMap(lsMap * map)
 {
-    int i;
+    unsigned int i;
 
     if (map == NULL)
         return;
@@ -45,81 +45,28 @@ void lsReleaseMap(lsMap * map)
     lsDiscardMem(map);
 }
 
-static int BuildGrid(lsMap * map, lsTree * ls, unsigned int len)
+static void FillMap(lsMap * map, lsTree * ls, unsigned int x, unsigned int y, unsigned int len)
 {
-    float height = (float)(ls->height);
-    int middle, end, i, j, l = len - 1;
+    unsigned int xa, ya;
 
-    lsNewMem(map->grid, sizeof(float *) * len);
-
-    for (i = 0; i < len; ++i)
+    if (len == 1)
     {
-        lsNewMem(map->grid[i], sizeof(float) * len);
-
-        for (j = 0; j < len; j++)
-            map->grid[i][j] = 0.0;
+        map->grid[x][y] = ls->height;
+        return;
     }
 
-    end = len - 1;
-    middle = len >> 1;
-    map->grid[middle][middle] = height;
+    len >>= 1;
+    xa = x + len;
+    ya = y + len;
 
-    if (ls->children != NULL)
-    {
-        BuildSubGrid(map, ls->children[0], 0, middle, 0, middle, 1, height);
-        BuildSubGrid(map, ls->children[1], middle, end, 0, middle, 1, height);
-        BuildSubGrid(map, ls->children[2], 0, middle, middle, end, 1, height);
-        BuildSubGrid(map, ls->children[3], middle, end, middle, end, 1, height);
-    }
+    if (ls->children == NULL)
+        lsExpand(ls, 1, NULL);
 
-    for (i = 1; i < l; ++i)
-    {
-        for (j = 1; j < l; j++)
-        {
-            if (map->grid[i][j] == 0.0)
-                map->grid[i][j] = Normal(map, i, j);
-        }
-    }
-
-    return 1;
+    FillMap(map, ls->children[0], x, y, len);
+    FillMap(map, ls->children[1], xa, y, len);
+    FillMap(map, ls->children[2], x, ya, len);
+    FillMap(map, ls->children[3], xa, ya, len);
 
     FAIL:
-        lsDiscardMem(map->grid);
-        return 0;
-}
-
-static void BuildSubGrid(lsMap * map, lsTree * ls, int xmin, int xmax, int ymin, int ymax, int depth, float height)
-{
-    float current = ls->height * pow(0.95, depth);
-    int x = (xmin + xmax) >> 1, y = (ymin + ymax) >> 1;
-
-    map->grid[x][y] = current;
-
-    if (ls->children != NULL)
-    {
-        BuildSubGrid(map, ls->children[0], xmin, x, ymin, y, depth + 1, current);
-        BuildSubGrid(map, ls->children[1], x, xmax, ymin, y, depth + 1, current);
-        BuildSubGrid(map, ls->children[2], xmin, x, y, ymax, depth + 1, current);
-        BuildSubGrid(map, ls->children[3], x, xmax, y, ymax, depth + 1, current);
-    }
-}
-
-static float Normal(lsMap * map, int x, int y)
-{
-    float total = 0.0;
-    unsigned int count = 0, xmax = x + 1, ymax = y + 1, i, j;
-
-    for (i = x - 1; i <= xmax; ++i)
-    {
-        for (j = y - 1; j <= ymax; ++j)
-        {
-            if (map->grid[i][j] != 0.0)
-            {
-                total += map->grid[i][j];
-                ++count;
-            }
-        }
-    }
-
-    return count != 0 ? total / count : 0.0;
+        return;
 }

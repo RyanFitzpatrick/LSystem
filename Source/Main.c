@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define DEPTH 8
+#define DEPTH 4
 
 int main()
 {
@@ -14,7 +14,7 @@ int main()
     int i, j;
 
     srand(time(NULL));
-    lsBuildSystem(ls, NULL, 0, rand() % 4 + 1, time(NULL));
+    lsBuildSystem(ls, NULL, 0, 0, 1.0, 1.0);
     lsExpand(ls, DEPTH, NULL);
     lsBuildMap(map, ls, DEPTH);
 
