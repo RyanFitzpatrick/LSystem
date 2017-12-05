@@ -7,9 +7,9 @@ void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int
     FILE * file;
     lsBmpFileHeader bitmapFileHeader;
     lsBmpInfoHeader bitmapInfoHeader;
-    unsigned char grayscale[4];
-    char bmpFileStr[sizeof(lsBmpFileHeader)];
-    char bmpInfoStr[sizeof(lsBmpInfoHeader)];
+    unsigned char grayscale[5];
+    char bmpFileStr[sizeof(lsBmpFileHeader) + 1];
+    char bmpInfoStr[sizeof(lsBmpInfoHeader) + 1];
     char pixel;
     int i, j;
 
@@ -18,7 +18,7 @@ void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int
     bitmapFileHeader.offBits = sizeof(lsBmpFileHeader) + sizeof(lsBmpFileHeader);
     bitmapFileHeader.size = bitmapFileHeader.offBits + (width + (width % 4 ? (4 - width % 4) : 0)) * height;
     memcpy(bmpFileStr, &bitmapFileHeader, sizeof(lsBmpFileHeader));
-    /*bmpFileStr[sizeof(lsBmpFileHeader)] = '\0';*/
+    bmpFileStr[sizeof(lsBmpFileHeader)] = '\0';
 
     memset(&bitmapInfoHeader, 0, sizeof(lsBmpInfoHeader));
     bitmapInfoHeader.size = sizeof(lsBmpInfoHeader);
@@ -27,7 +27,7 @@ void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int
     bitmapInfoHeader.planes = 1;
     bitmapInfoHeader.bitCount = 8;
     memcpy(bmpInfoStr, &bitmapInfoHeader, sizeof(lsBmpInfoHeader));
-    /*bmpInfoStr[sizeof(lsBmpInfoHeader)] = '\0';*/
+    bmpInfoStr[sizeof(lsBmpInfoHeader)] = '\0';
 
     file = fopen(name, "wb");
     fprintf(file, "%s%s", bmpFileStr, bmpInfoStr);
@@ -36,6 +36,7 @@ void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int
     for (i = 0; i < 256; ++i)
     {
         memset(grayscale, i, sizeof(grayscale));
+        grayscale[4] = '\0';
         fprintf(file, "%s", grayscale);
     }
 
