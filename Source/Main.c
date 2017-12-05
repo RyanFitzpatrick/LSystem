@@ -1,3 +1,4 @@
+#include "Bmp.h"
 #include "Map.h"
 #include "Memory.h"
 #include "Tree.h"
@@ -5,7 +6,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define DEPTH 8
+#define DEPTH 4
 
 int main()
 {
@@ -28,6 +29,7 @@ int main()
         printf("\n");
     }
 
+    lsSaveBmp(map->grid, "Resources/cool.bmp", map->len, map->len);
     lsReleaseMap(map);
     lsReleaseSystem(ls);
 
