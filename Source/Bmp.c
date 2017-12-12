@@ -6,11 +6,11 @@
 void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int height)
 {
     FILE * file;
-    unsigned char * img = NULL, pixel;
+    unsigned char * img = NULL;
     unsigned char bmpfileheader[14] = {'B','M', 0,0,0,0, 0,0, 0,0, 54,0,0,0};
     unsigned char bmpinfoheader[40] = {40,0,0,0, 0,0,0,0, 0,0,0,0, 1,0, 24,0};
     unsigned char bmppad[3] = {0,0,0};
-    unsigned int filesize = 54 + (3 * width * height), i , j, x, y;
+    unsigned int filesize = 54 + (3 * width * height), i , j, x, y, pixel;
 
     img = malloc(3 * width * height);
     memset(img, 0, (3 * width * height));
@@ -21,10 +21,12 @@ void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int
         {
             x = i;
             y = (height - 1) - j;
-            pixel = (char)(map[i][j] * 200);
+            pixel = (unsigned int)(map[i][j] * 10);
+            if (pixel > 255) pixel = 255;
+            printf("%d %f\n", pixel, map[i][j]);
             img[(x + (y * width)) * 3] = pixel;
-            img[(x + (y * width)) * 3 + 1] = pixel << 8;
-            img[(x + (y * width)) * 3 + 2] = pixel << 16;
+            img[(x + (y * width)) * 3 + 1] = pixel;
+            img[(x + (y * width)) * 3 + 2] = pixel;
         }
     }
 

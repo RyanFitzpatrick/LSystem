@@ -78,40 +78,40 @@ static lsTree ** Expand(lsTree * parent)
     switch(parent->node)
     {
         case 0:
-            lsBuildSystem(children[0], parent, 4, parent->seed, parent->height + (-0.080073 * (parent->decay)), parent->decay * 0.500058);
-            lsBuildSystem(children[1], parent, 4, parent->seed, parent->height + (-0.080073 * (parent->decay)), parent->decay * 0.500058);
+            lsBuildSystem(children[0], parent, 4, parent->seed, parent->height + (-3.080073 * (parent->decay)), parent->decay * 0.500058);
+            lsBuildSystem(children[1], parent, 4, parent->seed, parent->height + (-3.080073 * (parent->decay)), parent->decay * 0.500058);
             lsBuildSystem(children[2], parent, 5, parent->seed, parent->height + (-0.080073 * (parent->decay)), parent->decay * 0.500058);
             lsBuildSystem(children[3], parent, 2, parent->seed, parent->height + (-0.080073 * (parent->decay)), parent->decay * 0.500058);
             return children;
         case 1:
-            lsBuildSystem(children[0], parent, 1, parent->seed, parent->height + (-0.004651 * (parent->decay)), parent->decay * 0.581664);
+            lsBuildSystem(children[0], parent, 1, parent->seed, parent->height + (-4.004651 * (parent->decay)), parent->decay * 0.581664);
             lsBuildSystem(children[1], parent, 1, parent->seed, parent->height + (-0.004651 * (parent->decay)), parent->decay * 0.581664);
-            lsBuildSystem(children[2], parent, 3, parent->seed, parent->height + (-0.004651 * (parent->decay)), parent->decay * 0.581664);
+            lsBuildSystem(children[2], parent, 3, parent->seed, parent->height + (-2.004651 * (parent->decay)), parent->decay * 0.581664);
             lsBuildSystem(children[3], parent, 3, parent->seed, parent->height + (-0.004651 * (parent->decay)), parent->decay * 0.581664);
             return children;
         case 2:
-            lsBuildSystem(children[0], parent, 2, parent->seed, parent->height + (0.440361 * (parent->decay)), parent->decay * 0.977725);
-            lsBuildSystem(children[1], parent, 1, parent->seed, parent->height + (0.440361 * (parent->decay)), parent->decay * 0.977725);
-            lsBuildSystem(children[2], parent, 1, parent->seed, parent->height + (0.440361 * (parent->decay)), parent->decay * 0.977725);
-            lsBuildSystem(children[3], parent, 3, parent->seed, parent->height + (0.440361 * (parent->decay)), parent->decay * 0.977725);
+            lsBuildSystem(children[0], parent, 2, parent->seed, parent->height + (6.440361 * (parent->decay)), parent->decay * 0.977725);
+            lsBuildSystem(children[1], parent, 1, parent->seed, parent->height + (5.440361 * (parent->decay)), parent->decay * 0.977725);
+            lsBuildSystem(children[2], parent, 1, parent->seed, parent->height + (4.440361 * (parent->decay)), parent->decay * 0.977725);
+            lsBuildSystem(children[3], parent, 3, parent->seed, parent->height + (4.440361 * (parent->decay)), parent->decay * 0.977725);
             return children;
         case 3:
             lsBuildSystem(children[0], parent, 1, parent->seed, parent->height + (-0.128067 * (parent->decay)), parent->decay * 0.507773);
-            lsBuildSystem(children[1], parent, 1, parent->seed, parent->height + (-0.128067 * (parent->decay)), parent->decay * 0.507773);
-            lsBuildSystem(children[2], parent, 3, parent->seed, parent->height + (-0.128067 * (parent->decay)), parent->decay * 0.507773);
+            lsBuildSystem(children[1], parent, 1, parent->seed, parent->height + (-2.128067 * (parent->decay)), parent->decay * 0.507773);
+            lsBuildSystem(children[2], parent, 3, parent->seed, parent->height + (-1.128067 * (parent->decay)), parent->decay * 0.507773);
             lsBuildSystem(children[3], parent, 3, parent->seed, parent->height + (-0.128067 * (parent->decay)), parent->decay * 0.507773);
             return children;
         case 4:
             lsBuildSystem(children[0], parent, 0, parent->seed, parent->height + (0.214676 * (parent->decay)), parent->decay * 0.800868);
-            lsBuildSystem(children[1], parent, 0, parent->seed, parent->height + (0.214676 * (parent->decay)), parent->decay * 0.800868);
-            lsBuildSystem(children[2], parent, 4, parent->seed, parent->height + (0.214676 * (parent->decay)), parent->decay * 0.800868);
+            lsBuildSystem(children[1], parent, 0, parent->seed, parent->height + (5.214676 * (parent->decay)), parent->decay * 0.800868);
+            lsBuildSystem(children[2], parent, 4, parent->seed, parent->height + (5.214676 * (parent->decay)), parent->decay * 0.800868);
             lsBuildSystem(children[3], parent, 4, parent->seed, parent->height + (0.214676 * (parent->decay)), parent->decay * 0.800868);
             return children;
         default:
             lsBuildSystem(children[0], parent, 1, parent->seed, parent->height + (0.434368 * (parent->decay)), parent->decay * 0.974003);
             lsBuildSystem(children[1], parent, 5, parent->seed, parent->height + (0.434368 * (parent->decay)), parent->decay * 0.974003);
             lsBuildSystem(children[2], parent, 3, parent->seed, parent->height + (0.434368 * (parent->decay)), parent->decay * 0.974003);
-            lsBuildSystem(children[3], parent, 1, parent->seed, parent->height + (0.434368 * (parent->decay)), parent->decay * 0.974003);
+            lsBuildSystem(children[3], parent, 1, parent->seed, parent->height + (6.434368 * (parent->decay)), parent->decay * 0.974003);
             return children;
     }
 

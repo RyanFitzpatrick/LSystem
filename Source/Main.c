@@ -15,7 +15,7 @@ int main()
     int i, j;
 
     srand(time(NULL));
-    lsBuildSystem(ls, NULL, 0, 0, 1.0, 1.0);
+    lsBuildSystem(ls, NULL, 0, 0, 10.0, 1.0);
     lsExpand(ls, DEPTH, NULL);
     lsBuildMap(map, ls, DEPTH);
 
