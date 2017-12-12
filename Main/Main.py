@@ -59,10 +59,10 @@ prog = ctx.program([
     '''),
 ])
 
-img0 = Image.open('data/heightmap.bmp').convert('L').transpose(Image.FLIP_TOP_BOTTOM)
-img1 = Image.open('data/grass.jpg').convert('RGB').transpose(Image.FLIP_TOP_BOTTOM)
-img2 = Image.open('data/rock.jpg').convert('RGB').transpose(Image.FLIP_TOP_BOTTOM)
-img3 = Image.open('data/cracks.jpg').convert('L').transpose(Image.FLIP_TOP_BOTTOM)
+img0 = Image.open('../Resources/heightmap.bmp').convert('L').transpose(Image.FLIP_TOP_BOTTOM)
+img1 = Image.open('../Resources/grass.jpg').convert('RGB').transpose(Image.FLIP_TOP_BOTTOM)
+img2 = Image.open('../Resources/rock.jpg').convert('RGB').transpose(Image.FLIP_TOP_BOTTOM)
+img3 = Image.open('../Resources/cracks.jpg').convert('L').transpose(Image.FLIP_TOP_BOTTOM)
 # img4 = Image.open('data/checked.jpg').convert('L').transpose(Image.FLIP_TOP_BOTTOM)
 
 tex0 = ctx.texture(img0.size, 1, img0.tobytes())

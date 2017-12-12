@@ -42,7 +42,7 @@ void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int
     bmpinfoheader[10] = (unsigned char)(height >> 16);
     bmpinfoheader[11] = (unsigned char)(height >> 24);
 
-    file = fopen("img.bmp","wb");
+    file = fopen("Resources/heightmap.bmp","wb");
     fwrite(bmpfileheader,1,14,file);
     fwrite(bmpinfoheader,1,40,file);
 

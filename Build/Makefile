@@ -18,4 +18,4 @@ Tree:
 	gcc $(CFLAGS) ../Source/Tree.c -I../Headers -o ../Clean/Tree.o
 
 Clean:
-	rm -rf ../Clean/* ../Main/*
+	rm -rf ../Clean/* ../Main/Main
