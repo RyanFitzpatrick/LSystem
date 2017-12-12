@@ -4,9 +4,9 @@ This software uses Quadtree based L-Systems to generate various height maps and 
 More details about the process can be found in "LSystem.pdf"
 
 To build the solution simply run "make -C Build" in the project root directory. The project is written in ansi C and should compile
-Anywhere where the C standard library and GCC are installed. After successfully building the solution, the code can be run from the project root
-Using the command "./Main/Main". This will output the heightmap as a matrix, and also save a bitmap image of the heightmap in the Resources
-Folder, under the name "heightmap.bmp".
+Anywhere where the C standard library and GCC are installed. After successfully building the solution, the code can be run from the project
+Root using the command "./Main/Main". This will output the heightmap as a matrix, and also save a bitmap image of the heightmap in the
+"Resources" folder, under the name "heightmap.bmp".
 
 To view a rendering of the bitmap image, we can use "Main.py". This file currently only supports rendering on Windows. Running "Main.py"
 while in the "Main" folder will open a rotating view of the genrated landscape. You must be in the "Main" folder for this to work
