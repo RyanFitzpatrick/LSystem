@@ -23,7 +23,6 @@ void lsSaveBmp(float ** map, const char * name, unsigned int width, unsigned int
             y = (height - 1) - j;
             pixel = (unsigned int)(map[i][j] * 10);
             if (pixel > 255) pixel = 255;
-            printf("%d %f\n", pixel, map[i][j]);
             img[(x + (y * width)) * 3] = pixel;
             img[(x + (y * width)) * 3 + 1] = pixel;
             img[(x + (y * width)) * 3 + 2] = pixel;
