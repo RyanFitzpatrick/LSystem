@@ -14,4 +14,11 @@ correctly. This always requires that python be installed, along with the followi
 Which can be installed with pip (pip install GLWindow, pip instal ModernGL, pip install Pillow, and pip install pyrr)
 
 Folder Structure:
- - 
+ - Build: Contains the Makefile used to build the solution
+ - Clean: Contains object files
+ - Docs: Contains this README and other useful documentation
+ - Files: Contains past heightmap matrices and other useful reference files
+ - Headers: Contains all the ".h" files required for the L-System heightmap generation
+ - Main: Contains the main heightmap generator program, and the windows python renderer
+ - Resources: Contains all files required by the windows python renderer
+ - Source: Contains all the ".c" files required for the L-System heightmap generation, this is the where the main implementation code is
