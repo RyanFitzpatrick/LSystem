@@ -1,7 +1,7 @@
 # LSystem
 
 This software uses Quadtree based L-Systems to generate various height maps and save them as bitmap images for later rendering.
-More details about the process can be found in "LSystem.pdf"
+More details about the process can be found in "LSystems.pdf"
 
 To build the solution simply run "make -C Build" in the project root directory. The project is written in ansi C and should compile
 Anywhere where the C standard library and GCC are installed. After successfully building the solution, the code can be run from the project
